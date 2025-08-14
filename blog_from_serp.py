@@ -65,9 +65,16 @@ def main():
 
     # Input section
     with st.expander("**PRO-TIP** - Read the instructions below. 📝", expanded=True):
+        # Full-width prompt/keywords input to match API key input width
+        input_blog_keywords = st.text_area(
+            "**🔑 Enter main keywords of your blog!** (Blog Title Or Content Topic)",
+            height=80,
+            placeholder="You can write a complete sentence or multiple keywords, e.g., 'How to start a vegetable garden in small spaces'.",
+            help="Write a full sentence or provide multiple keywords for better results."
+        )
+
         col1, col2, col3 = st.columns([5, 5, 5])
         with col1:
-            input_blog_keywords = st.text_input('**🔑 Enter main keywords of your blog!** (Blog Title Or Content Topic)', help="The main topic or title for your blog.")
             blog_type = st.selectbox('📝 Blog Post Type', options=['General', 'How-to Guides', 'Listicles', 'Job Posts', 'Cheat Sheets', 'Customize'], index=0)
             if blog_type == 'Customize':
                 blog_type = st.text_input("Enter your custom blog type", help="Provide a custom blog type if you chose 'Customize'.")
