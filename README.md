@@ -1,65 +1,75 @@
 # Alwrity - AI Blog Post Generator
 
-Alwrity is an AI-powered blog post generator built with Streamlit, leveraging the capabilities of a large language model (LLM). It streamlines the process of creating SEO-optimized and engaging blog posts.
+Alwrity is a Streamlit app that generates comprehensive, SEO‑oriented blog posts. It enriches your prompt with web search context using Exa (formerly Metaphor) and writes the article with Google Gemini.
 
 ## Features
 
-- **Keyword-driven Content Generation**: Input your main blog keywords to generate a comprehensive blog post.
-- **Blog Post Type Selection**: Choose from various blog post formats such as 'General', 'How-to Guides', 'Listicles', and more.
-- **Tone and Language Customization**: Select the desired tone (e.g., Professional, Casual) and language (e.g., English, Vietnamese) for your blog post.
-- **SEO Optimization**: Automatically optimized for search engines, considering relevant keywords and search intent.
-- **FAQ Generation**: Generates FAQs based on "People Also Ask" results from Google searches.
-- **Human-like Writing Style**: Produces content in a natural and engaging style, incorporating personal insights and anecdotes.
+- **Keyword‑driven generation**: Provide a topic/keywords; get a full article.
+- **Formats, tone, language**: Choose post type, tone, and language.
+- **Search‑augmented writing**: Uses Exa/Metaphor search results to ground content.
+- **Built‑in SEO guidance**: Structure, semantic keywords, and E‑E‑A‑T alignment.
+- **FAQs + extras**: Adds FAQs, CTA, visual suggestions, and SEO metadata (title, meta, slug, hashtags).
 
-## Dependencies
+## Tech stack / Dependencies
 
-The application requires the following dependencies:
+Install from `requirements.txt`:
 
-- **Streamlit**
-- **OpenAI API** (or another LLM provider)
-- **Serper API** (for Google search results)
-- **requests**
+- `streamlit`
+- `exa_py` (Exa/Metaphor web search)
+- `google.generativeai` (Gemini)
+- `tenacity` (robust retries)
 
-## Installation
+## Getting started (Windows PowerShell tested)
 
-This installation process was tested on Windows PowerShell by the author.
+1) Clone:
+```powershell
+git clone https://github.com/AJaySi/alwrity_blog_writer.git
+```
+2) Enter the project and install dependencies:
+```powershell
+cd alwrity_blog_writer
+pip install -r requirements.txt
+```
+3) Run the app:
+```powershell
+streamlit run blog_from_serp.py
+```
 
-1. Clone the repository:
-    ```powershell
-    git clone https://github.com/AJaySi/alwrity_blog_writer.git
-    ```
-2. Navigate to the project directory:
-    ```powershell
-    cd alwrity_blog_writer
-    ```
-3. Run the application:
-    ```powershell
-    streamlit run blog_from_serp.py
-    ```
-4. When the app opens in your browser, enter your API keys in the UI under the "API Configuration" section.
+## Configuration (API keys)
 
-No need to set environment variables or edit code—just provide your API keys in the app interface after launch.
+You can provide keys directly in the app UI (recommended for quick start), or via environment variables.
+
+- **Exa (Metaphor) API key**: get one from [Metaphor/Exa](https://metaphor.systems/) (Exa is the current platform).
+- **Google Gemini API key**: create one in [Google AI Studio](https://aistudio.google.com/app/apikey).
+
+Optional environment variables if you prefer not to enter keys in the UI:
+
+```powershell
+$env:METAPHOR_API_KEY = "your_exa_or_metaphor_api_key"
+$env:GEMINI_API_KEY   = "your_gemini_api_key"
+```
+
+When the app starts, you can also paste keys into the `API Configuration` section. The app prefers the UI‑entered keys; if omitted, it falls back to the environment variables above.
 
 ## Usage
 
-1. Open the Alwrity application in your web browser.
-2. Enter the main keywords for your blog post.
-3. Select the desired blog post type, tone, and language.
-4. Click the **"Write Blog Post"** button.
-5. View the generated blog post, which includes SEO-optimized content and relevant FAQs.
+1. Open the app in your browser after launching.
+2. Enter blog keywords, choose post type, tone, and language.
+3. Click **Write Blog Post** to generate.
+4. The output includes the article body, FAQs, visual suggestions, and SEO metadata.
 
 ## Limitations
 
-- The quality of the generated content depends on the input keywords and the capabilities of the LLM.
-- FAQs are based on Google search results and may not always be comprehensive or accurate.
-- API keys for OpenAI and Serper may have usage limits or associated costs.
+- Output quality depends on inputs and on search result relevance.
+- FAQs are LLM‑generated (guided by SERP context), not guaranteed to match Google PAA exactly.
+- API usage for Exa/Metaphor and Gemini may be rate‑limited or billable.
 
-## Future Improvements
+## Roadmap ideas
 
-- Integration with additional LLM providers for diverse content generation.
-- User feedback mechanisms to enhance the quality and relevance of generated content.
-- A user interface for customizing SEO parameters and content structure.
+- Switchable LLMs and search providers.
+- Feedback loop to refine style and on‑page SEO.
+- More controls for outline and metadata.
 
 ---
 
-We welcome contributions and feedback! Feel free to open issues or submit pull requests to help improve Alwrity.
+Contributions and feedback are welcome. Please open issues or PRs to help improve Alwrity.
