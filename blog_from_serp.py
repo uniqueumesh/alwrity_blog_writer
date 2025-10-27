@@ -155,7 +155,14 @@ def generate_blog_post(input_blog_keywords, input_type, input_tone, input_langua
         5. **Visual and Multimedia Suggestions**:
            - Recommend where to include images, infographics, or videos to enhance the content's appeal.
 
-        6. **SEO Metadata**:
+        6. **References Section**:
+           - Include a "References" section after the conclusion but before SEO metadata
+           - List all sources used for research with proper citations
+           - Use the actual URLs from the search results provided
+           - Format as numbered list: [Article Title] - [URL]
+           - Include only the article title and clickable link
+           
+        7. **SEO Metadata**:
            - Append the following metadata after the main blog content:
              - A **Blog Title** that is catchy and includes the primary keyword.
              - A **Meta Description** summarizing the blog post in under 160 characters.
