@@ -142,7 +142,18 @@ def generate_blog_post(input_blog_keywords, input_type, input_tone, input_langua
         2. **Content Structure**:
            - Start with a compelling introduction that hooks the reader and outlines the blog's value.
            - Organize the content with logical headings and subheadings.
-           - Use bullet points, numbered lists, and short paragraphs for readability.
+           - Breakup text with clear headlines and bullet points for easier reading.
+           - Write in active voice and avoid using passive voice.
+           - Write in a simple and easy to understand human language.
+           - Use words that people would use to look at your blog content and place those words in the blog post.
+           - Include a clear CTAs at the end of the blog post.
+           - Do not repeate the same words or phrases in the blog post.
+           - Do not use fluff words or phrases.
+           - Write in a way that is easy to understand and read.
+           - Avoid using complex words or phrases.
+           - Avoid using jargon words or phrases.
+           - Avoid using words that are not related to the topic.
+           - Avoid using AI sounding words like realm, evolving, etc.
 
         3. **Engagement and Value**:
            - Provide actionable tips, real-world examples, and personal anecdotes.
