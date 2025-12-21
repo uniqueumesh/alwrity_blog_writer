@@ -2,7 +2,7 @@ import time
 import os
 import streamlit as st
 from tenacity import retry, stop_after_attempt, wait_random_exponential
-import google.generativeai as genai
+from google import genai
 from exa_py import Exa
 
 
@@ -210,11 +210,13 @@ def metaphor_search_articles(query, api_key):
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def generate_text_with_exception_handling(prompt, api_key):
     try:
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel(model_name="gemini-2.0-flash", generation_config={"max_output_tokens": 8192})
-        convo = model.start_chat(history=[])
-        convo.send_message(prompt)
-        return convo.last.text
+        # The client automatically picks up the API key from the parameter
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        return response.text
     except Exception as e:
         st.exception(f"An unexpected error occurred: {e}")
         return None
