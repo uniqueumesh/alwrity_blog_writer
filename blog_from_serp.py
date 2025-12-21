@@ -199,7 +199,7 @@ def metaphor_search_articles(query, api_key):
     metaphor = Exa(api_key)
     
     try:
-        search_response = metaphor.search_and_contents(query, use_autoprompt=True, num_results=5)
+        search_response = metaphor.search_and_contents(query, num_results=5)
         return search_response.results
     except Exception as err:
         st.error(f"Failed in metaphor.search_and_contents: {err}")
