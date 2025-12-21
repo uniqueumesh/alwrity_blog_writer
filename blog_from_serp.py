@@ -4,7 +4,7 @@ import streamlit as st
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 from google import genai
 from exa_py import Exa
-from prompts import get_short_blog_prompt
+from prompts import load_prompt
 
 
 def main():
@@ -74,7 +74,7 @@ def main():
             help="Write a full sentence or provide multiple keywords for better results."
         )
 
-        col1, col2, col3 = st.columns([5, 5, 5])
+        col1, col2, col3, col4 = st.columns([5, 5, 5, 5])
         with col1:
             blog_type = st.selectbox('📝 Blog Post Type', options=['General', 'How-to Guides', 'Listicles', 'Job Posts', 'Cheat Sheets', 'Customize'], index=0)
             if blog_type == 'Customize':
@@ -87,6 +87,13 @@ def main():
             input_blog_language = st.selectbox('🌐 Language', options=['English', 'Vietnamese', 'Chinese', 'Hindi', 'Spanish', 'Customize'], index=0)
             if input_blog_language == 'Customize':
                 input_blog_language = st.text_input("Enter your custom language", help="Provide a custom language if you chose 'Customize'.")
+        with col4:
+            blog_length = st.selectbox(
+                '📏 Blog Length',
+                options=['Short Form (500-800 words)', 'Long Detailed (2000+ words)'],
+                index=0,  # Default to Short Form
+                help="Choose the length of your blog post"
+            )
 
         # Generate Blog Button
         if st.button('**Write Blog Post ✍️**'):
@@ -103,7 +110,7 @@ def main():
                         st.error("❌ Gemini API Key is not available! Please provide your API key in the API Configuration section.")
                         return
                     try:
-                        blog_post = generate_blog_post(input_blog_keywords, blog_type, input_blog_tone, input_blog_language, metaphor_api_key, gemini_api_key)
+                        blog_post = generate_blog_post(input_blog_keywords, blog_type, input_blog_tone, input_blog_language, blog_length, metaphor_api_key, gemini_api_key)
                         if blog_post:
                             st.subheader('**👩🧕🔬 Your Final Blog Post!**')
                             st.write(blog_post)
@@ -117,7 +124,7 @@ def main():
 
 
 # Function to generate the blog post using the LLM
-def generate_blog_post(input_blog_keywords, input_type, input_tone, input_language, metaphor_api_key, gemini_api_key):
+def generate_blog_post(input_blog_keywords, input_type, input_tone, input_language, blog_length, metaphor_api_key, gemini_api_key):
     serp_results = None
     try:
         serp_results = metaphor_search_articles(input_blog_keywords, metaphor_api_key)
@@ -125,8 +132,8 @@ def generate_blog_post(input_blog_keywords, input_type, input_tone, input_langua
         st.error(f"❌ Failed to retrieve search results for {input_blog_keywords}: {err}")
     
     if serp_results:
-        # Load prompt from separate file
-        prompt = get_short_blog_prompt(input_type, input_tone, input_language, input_blog_keywords, serp_results)
+        # Load appropriate prompt based on blog length selection
+        prompt = load_prompt(blog_length, input_type, input_tone, input_language, input_blog_keywords, serp_results)
         return generate_text_with_exception_handling(prompt, gemini_api_key)
     return None
 
