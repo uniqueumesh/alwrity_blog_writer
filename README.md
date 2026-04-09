@@ -68,6 +68,12 @@ When the app starts, you can also paste keys into the `API Configuration` sectio
 - FAQs are LLM‑generated (guided by SERP context), not guaranteed to match Google PAA exactly.
 - API usage for Exa/Metaphor and Gemini may be rate‑limited or billable.
 
+## Gemini fallback behavior
+
+To improve reliability on free-tier spikes, generation now tries Gemini models in this order:
+`gemini-2.5-flash-lite` -> `gemini-2.5-flash` -> `gemini-2.5-pro`.
+If one model returns transient errors (like 503/429), the app retries briefly and then falls back to the next model.
+
 ## Roadmap ideas
 
 - Switchable LLMs and search providers.

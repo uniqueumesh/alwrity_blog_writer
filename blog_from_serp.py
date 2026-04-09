@@ -1,10 +1,8 @@
-import time
 import os
 import streamlit as st
-from tenacity import retry, stop_after_attempt, wait_random_exponential
-from google import genai
 from exa_py import Exa
 from prompts import load_prompt
+from llm_client import generate_with_fallback
 
 
 def main():
@@ -120,7 +118,7 @@ def main():
                         if "quota exceeded" in str(e).lower():
                             st.error("❌ API limit exceeded! Please provide your own API key in the API Configuration section.")
                         else:
-                            st.error(f"💥 An unexpected error occurred: {e}")
+                            st.error("💥 Gemini is busy right now. Please try again in a minute.")
 
 
 # Function to generate the blog post using the LLM
@@ -153,19 +151,11 @@ def metaphor_search_articles(query, api_key):
         return None
 
 
-# Exception handling for text generation
-@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def generate_text_with_exception_handling(prompt, api_key):
     try:
-        # The client automatically picks up the API key from the parameter
-        client = genai.Client(api_key=api_key)
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        return response.text
+        return generate_with_fallback(prompt, api_key)
     except Exception as e:
-        st.exception(f"An unexpected error occurred: {e}")
+        st.error(f"❌ Blog generation failed after fallback attempts: {e}")
         return None
 
 
