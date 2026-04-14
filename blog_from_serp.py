@@ -55,7 +55,7 @@ def main():
 
     # API Key Input Section
     with st.expander("API Configuration 🔑", expanded=False):
-        st.markdown('''If the default API keys are unavailable or exceed their limits, you can provide your own API keys below.<br>
+        st.markdown('''<p style="font-size:20px;">If the default API keys are unavailable or exceed their limits, you can provide your own API keys below.</p><br>
         <a href="https://metaphor.systems/" target="_blank">Get Metaphor API Key</a><br>
         <a href="https://aistudio.google.com/app/apikey" target="_blank">Get Gemini API Key</a>
         ''', unsafe_allow_html=True)
