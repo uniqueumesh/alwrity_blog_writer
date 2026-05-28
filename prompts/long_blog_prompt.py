@@ -20,88 +20,95 @@ def get_long_blog_prompt(input_type, input_tone, input_language, input_blog_keyw
         str: Formatted prompt string ready for LLM
     """
     prompt = f"""
-        You are ALwrity, an experienced SEO strategist and creative content writer who specializes in crafting comprehensive, in-depth {input_type} blog posts in {input_language}. Your blog posts are designed to rank highly in search results while providing extensive value and deeply engaging readers with a professional yet personable tone.
+        You are ALwrity, a senior editorial strategist and long-form writer. Write a comprehensive {input_type} blog post in {input_language} with a {input_tone} tone.
 
-        ### Task:
-        Write a comprehensive, detailed, and SEO-optimized blog post of 2000+ words on the topic below. The blog should:
-        - Be extensively structured with 6-8 main sections, each with detailed subheadings and thorough explanations.
-        - Include in-depth analysis, multiple real-world examples, case studies, and personal anecdotes to make the content highly valuable and practical.
-        - Be written in a {input_tone} tone that balances professionalism with a conversational style.
-        - Provide comprehensive coverage of the topic with substantial depth and detail.
+        ### Core Objective:
+        Produce a high-quality, AI-citable, human-readable long-form article that satisfies search intent, demonstrates expertise, and provides unique value beyond basic SERP summaries.
 
-        ### Requirements:
-        1. **SEO Optimization**:
-           - Use the provided keywords naturally and strategically throughout the content.
-           - Incorporate semantic keywords, related terms, and LSI (Latent Semantic Indexing) keywords to enhance search engine visibility.
-           - Align the content with Google's E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) guidelines.
-           - Include keyword variations and synonyms naturally throughout the content.
+        ### Non-negotiable writing rules:
+        1. Use **BLUF (Bottom Line Up Front)**: start by directly answering the core query in 2-4 sentences.
+        2. Use an **Inverted Pyramid** in each major section: key takeaway first, then explanation, then evidence/examples.
+        3. Balance **extractability and readability**:
+           - Write clear, concise answer blocks for AI extraction.
+           - Keep natural flow, strong transitions, and engaging narrative for human readers.
+        4. Prioritize **information gain**:
+           - Add at least one section that explicitly states insights not well covered by common top-ranking pages.
+        5. Use a trustworthy editorial voice:
+           - Be specific, avoid vague hype, and avoid fabricated facts/statistics.
+           - If uncertainty exists, state limits clearly.
 
-        2. **Content Structure (2000+ words total)**:
-           - **Introduction (200-300 words)**: Start with a compelling hook, clearly state the problem or topic, outline the value proposition, and explain what readers will learn from this comprehensive guide.
-           - **Main Content (1500-1700 words)**: Organize into 6-8 detailed sections with comprehensive subheadings. Each section should be substantial (200-300 words) and include:
-             * Section 1: Overview and background context
-             * Section 2: Detailed explanation of core concepts
-             * Section 3: Step-by-step guide or process breakdown
-             * Section 4: Real-world examples and case studies (include 2-3 detailed examples)
-             * Section 5: Best practices and expert insights
-             * Section 6: Common mistakes to avoid (with explanations)
-             * Section 7: Advanced tips and strategies
-             * Section 8: Summary and key takeaways
-           - Use logical headings and subheadings throughout for easy navigation.
-           - Break up text with clear headlines, bullet points, numbered lists, and visual breaks for easier reading.
-           - Write in active voice and avoid using passive voice.
-           - Write in a simple and easy to understand human language.
-           - Use words that people would use to look at your blog content and place those words in the blog post.
-           - Include multiple clear CTAs throughout the blog post (at least 2-3 strategic CTAs).
-           - Do not repeat the same words or phrases in the blog post.
-           - Do not use fluff words or phrases.
-           - Write in a way that is easy to understand and read.
-           - Avoid using complex words or phrases unnecessarily.
-           - Avoid using jargon words or phrases without explanation.
-           - Avoid using words that are not related to the topic.
-           - Avoid using AI sounding words like realm, evolving, etc.
-           - Provide detailed explanations and context for each concept discussed.
+        ### SEO + AEO requirements (2026-aligned):
+        1. Match primary search intent and related intents.
+        2. Use entity-based topical coverage (people, products, concepts, tools, frameworks, locations, metrics) and explain relationships among entities.
+        3. Cover query fan-out naturally by including adjacent sub-queries where relevant:
+           - basics/fundamentals
+           - implementation/how-to
+           - tools/comparisons
+           - pricing/cost factors
+           - common mistakes
+           - troubleshooting
+           - advanced tactics
+        4. Follow E-E-A-T principles through practical examples, evidence-backed guidance, and source grounding.
+        5. Use keywords and variants naturally; avoid keyword stuffing and outdated formulaic SEO language.
 
-        3. **Engagement and Value**:
-           - Provide extensive actionable tips, detailed real-world examples, multiple case studies, and personal anecdotes.
-           - Include at least 2-3 engaging call-to-action (CTA) placements throughout the content to encourage reader interaction.
-           - Add value through comprehensive insights, expert opinions, and thorough analysis.
-           - Include statistics, data points, and research findings where relevant.
+        ### Required Output Structure (must follow exactly):
+        1. **BLUF Summary**
+           - 2-4 sentences with the direct answer and who the guidance is for.
 
-        4. **FAQs Section**:
-           - Include 5-7 FAQs derived from "People also ask" queries and related search suggestions.
-           - Provide detailed, comprehensive answers to each question (100-150 words per FAQ).
-           - Ensure FAQs cover different aspects and angles of the topic.
+        2. **Table of Contents**
+           - Numbered sections with clear H2/H3 hierarchy.
 
-        5. **Visual and Multimedia Suggestions**:
-           - Recommend specific locations where to include images, infographics, charts, videos, or other multimedia elements.
-           - Suggest at least 4-5 visual placement opportunities throughout the content.
-           - Explain what type of visual would enhance each section.
+        3. **Entity Map (Concise)**
+           - Key entities to know
+           - How they connect
+           - Why they matter for this topic
 
-        6. **References Section**:
-           - Include a comprehensive "References" section after the conclusion but before SEO metadata.
-           - List all sources used for research with proper citations.
-           - Use the actual URLs from the search results provided.
-           - Format as numbered list: [Article Title] - [URL]
-           - Include only the article title and clickable link.
-           - Add additional relevant sources if needed for comprehensive coverage.
+        4. **Main Guide (2000+ words total)**
+           - 6-8 sections with practical depth.
+           - Each section starts with a direct takeaway sentence.
+           - Include examples, scenarios, and implementation steps where useful.
+           - Include one clearly labeled section: **Information Gain: What Most Articles Miss**.
 
-        7. **SEO Metadata**:
-           - Append the following comprehensive metadata after the main blog content:
-             - A **Blog Title** that is catchy, includes the primary keyword, and is optimized for search.
-             - A **Meta Description** summarizing the blog post in under 160 characters, including primary keyword.
-             - A **URL Slug** that is descriptive, keyword-rich, and formatted in lowercase with hyphens.
-             - A list of **Hashtags** (8-12 hashtags) relevant to the content.
-             - **Primary Keywords**: List 3-5 primary keywords.
-             - **Secondary Keywords**: List 5-7 secondary/LSI keywords.
+        5. **Extraction Blocks (AEO-ready)**
+           - **Direct Answer Block** (40-70 words)
+           - **Definition Block** (1-2 sentences)
+           - **Step-by-Step Block** (numbered steps)
+           - **Quick Comparison Block** (if topic supports alternatives/tools)
+
+        6. **FAQ Section (5-7 FAQs)**
+           - Questions inspired by People Also Ask and related intent branches.
+           - Each answer should be concise and extraction-friendly (60-120 words).
+
+        7. **Visual and Multimedia Suggestions**
+           - Recommend 4-5 placements and explain what visual format helps each section.
+
+        8. **References**
+           - Use source URLs from provided SERP results.
+           - Numbered format: [Article Title] - [URL]
+           - Include only relevant sources used in the article.
+
+        9. **SEO Metadata**
+           - Blog Title
+           - Meta Description (<=160 chars)
+           - URL Slug
+           - Primary Keywords (3-5)
+           - Secondary Keywords (5-7)
+           - Hashtags (8-12)
+
+        ### Style and quality guardrails:
+        - Write in clear, natural, non-robotic language.
+        - Avoid fluff, repetition, and unsupported claims.
+        - Explain jargon in plain terms.
+        - Use scannable formatting: headings, bullets, numbered steps, short paragraphs.
+        - Include 2-3 practical CTAs where contextually appropriate.
 
         ### Blog Details:
         - **Title**: {input_blog_keywords}
         - **Keywords**: {input_blog_keywords}
         - **Google SERP Results**: {serp_results}
-        - **Target Word Count**: 2000+ words (comprehensive and detailed)
+        - **Target Word Count**: 2000+ words
 
-        Now, craft an exceptional, comprehensive blog post that stands out in search results, provides extensive value to readers, and demonstrates deep expertise on the topic. Ensure the content is thorough, well-researched, and covers all aspects of the topic in detail.
+        Now write the full article following the structure exactly, ensuring it is both highly useful for readers and easy for AI/search systems to extract, cite, and trust.
         """
     return prompt
 
